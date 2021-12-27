@@ -1,138 +1,139 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
-    <script src="/js/clipboard.min.js"></script>
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    
-    <title>주소 & 좌표</title>
-   
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+  <script src="../js/clipboard.min.js"></script>
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+  <title>주소 & 좌표</title>
+
 </head>
+
 <body>
   <div class="w3-container w3-center w3-sans-serif w3-border w3-large">
-        <header>
-            <h1>주소 => 좌표 구하기</h1>
-        </header>
-        <section>
-            <label for="키워드">주소 : </label>
-            <input type="text" id="키워드" placeholder="주소를 입력하세요">
-            <button id="btn" class="w3-button w3-round w3-yellow">검색</button>
-            
-            <p>ex) 선부광장로33 or 선부동1077</p>
-            <div id="출력"></div>
-            <div id="버튼" class="w3-section">
-              <button id="clip" data-clipboard-target="#출력">클립보드 복사</button>
-            </div>
-            <div id="카카오내비" class="w3-section">
-              <a id="navi" href="#" onclick="navi();">
-                <img
-                  src="https://developers.kakao.com/assets/img/about/buttons/navi/kakaonavi_btn_medium.png"
-                />
-              </a>
-            </div>
-        </section>
-        <footer>
-            <p>
-              <a href="#">About us</a>
-              <a href="#">Terms of Wervice</a>
-              <a href="#">Sitemap</a>
-            </p>
-            <p>Copyright &copy; 2021 adress info</p>
-        </footer>
-    
-    </div>
-    <script>
-        // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
-        Kakao.init('ddb19c821fa59031f4fc19845a561b00');
+    <header>
+      <h1>주소 => 좌표 구하기</h1>
+    </header>
+    <section>
+      <label for="키워드">주소 : </label>
+      <input type="text" id="키워드" placeholder="주소를 입력하세요">
+      <button id="btn" class="w3-button w3-round w3-yellow">검색</button>
 
-        // SDK 초기화 여부를 판단합니다.
-        console.log(Kakao.isInitialized());
+      <p>ex) 선부광장로33 or 선부동1077</p>
+      <div id="출력"></div>
+      <div id="버튼" class="w3-section">
+        <button id="clip" data-clipboard-target="#출력">클립보드 복사</button>
+      </div>
+      <div id="카카오내비" class="w3-section">
+        <a id="navi" href="#" onclick="navi();">
+          <img src="https://developers.kakao.com/assets/img/about/buttons/navi/kakaonavi_btn_medium.png" />
+        </a>
+      </div>
+    </section>
+    <footer>
+      <p>
+        <a href="#">About us</a>
+        <a href="#">Terms of Wervice</a>
+        <a href="#">Sitemap</a>
+      </p>
+      <p>Copyright &copy; 2021 adress info</p>
+    </footer>
 
-        new ClipboardJS('#clip');
-        var btn = document.getElementById("btn");
-        var block1 = document.getElementById("버튼");
-        var block2 = document.getElementById("카카오내비");
+  </div>
+  <script>
+    // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
+    Kakao.init('ddb19c821fa59031f4fc19845a561b00');
 
-        block1.style.display = "none";
-        block2.style.display = "none";
-        
-        
-        var url = "https://dapi.kakao.com/v2/local/search/address.json?analyze_type=similar&query=";
-        
-        var par = {};
-        
-        btn.addEventListener("click",load);
-     
-        
-        function load() {
-        document.getElementById("출력").innerText = "";
-        var keyword = document.getElementById("키워드").value;
-        var enkeyword = encodeURIComponent(keyword);
-        var reurl = url + enkeyword;
-        var xhr = new XMLHttpRequest();
-        xhr.open(
-          "GET",
-          reurl
-        );
-        xhr.onreadystatechange = function () {
-              if (xhr.readyState === 4 && xhr.status === 200) {
-                var _tzs = xhr.responseText;
-                
-                var tzs = JSON.parse(_tzs);
-                // console.log(tzs);
-                var leng = tzs.documents.length;
-                if(leng == 1){
-                    var add_name = tzs.documents[0].road_address;
-                    // console.log(add_name);
-                        if(add_name != null){
-                              
-                                    var newaddress = tzs.documents[0].road_address.address_name;
-                                    var oldaddress = tzs.documents[0].address.address_name;
-                                    var x = tzs.documents[0].road_address.x;
-                                    var y = tzs.documents[0].road_address.y;
-                                  
-                                    document.getElementById("출력").innerText = `
+    // SDK 초기화 여부를 판단합니다.
+    console.log(Kakao.isInitialized());
+
+    new ClipboardJS('#clip');
+    var btn = document.getElementById("btn");
+    var block1 = document.getElementById("버튼");
+    var block2 = document.getElementById("카카오내비");
+
+    block1.style.display = "none";
+    block2.style.display = "none";
+
+
+    var url = "https://dapi.kakao.com/v2/local/search/address.json?analyze_type=similar&query=";
+
+    var par = {};
+
+    btn.addEventListener("click", load);
+
+
+    function load() {
+      document.getElementById("출력").innerText = "";
+      var keyword = document.getElementById("키워드").value;
+      var enkeyword = encodeURIComponent(keyword);
+      var reurl = url + enkeyword;
+      var xhr = new XMLHttpRequest();
+      xhr.open(
+        "GET",
+        reurl
+      );
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          var _tzs = xhr.responseText;
+
+          var tzs = JSON.parse(_tzs);
+          // console.log(tzs);
+          var leng = tzs.documents.length;
+          if (leng == 1) {
+            var add_name = tzs.documents[0].road_address;
+            // console.log(add_name);
+            if (add_name != null) {
+
+              var newaddress = tzs.documents[0].road_address.address_name;
+              var oldaddress = tzs.documents[0].address.address_name;
+              var x = tzs.documents[0].road_address.x;
+              var y = tzs.documents[0].road_address.y;
+
+              document.getElementById("출력").innerText = `
                                     구주소 : ${oldaddress}
                                     신주소 : ${newaddress}
                                     경도(x) : ${x}
                                     위도(y) : ${y}
                                     `;
-                                   
-                                    par = {
-                                      name: newaddress,
-                                      x: Number(x),
-                                      y: Number(y),
-                                      coordType: 'wgs84'
-                                    }
 
-                                    block1.style.display = "block";
-                                    block2.style.display = "block";
-                                   
-                                    
-                         
-                        }else{
-                          document.getElementById("출력").innerText ="없는 주소입니다.";
-                        }
-                      
-                }else{
-                  document.getElementById("출력").innerText ="없는 주소입니다.";
-                }
-                 
-         
+              par = {
+                name: newaddress,
+                x: Number(x),
+                y: Number(y),
+                coordType: 'wgs84'
               }
-        };
-        xhr.setRequestHeader("Authorization", "KakaoAK 82bee015dc3b0e995c40b45219e4c4e0");
-        xhr.send();
-       
-      }
 
-      function navi() {
-            
-            Kakao.Navi.share(par);
+              block1.style.display = "block";
+              block2.style.display = "block";
+
+
+
+            } else {
+              document.getElementById("출력").innerText = "없는 주소입니다.";
+            }
+
+          } else {
+            document.getElementById("출력").innerText = "없는 주소입니다.";
+          }
+
+
+        }
+      };
+      xhr.setRequestHeader("Authorization", "KakaoAK 82bee015dc3b0e995c40b45219e4c4e0");
+      xhr.send();
+
     }
 
-    </script>
+    function navi() {
+
+      Kakao.Navi.share(par);
+    }
+
+  </script>
 </body>
+
 </html>
