@@ -14,9 +14,9 @@
 
 <body>
   <div class="w3-container w3-center w3-sans-serif w3-border w3-large">
-    <header>
-      <h1>주소 => 좌표 구하기</h1>
-    </header>
+
+    <h1>주소 => 좌표 구하기</h1>
+
     <section>
       <label for="키워드">주소 : </label>
       <input type="text" id="키워드" placeholder="주소를 입력하세요">
@@ -33,14 +33,6 @@
         </a>
       </div>
     </section>
-    <footer>
-      <p>
-        <a href="#">About us</a>
-        <a href="#">Terms of Wervice</a>
-        <a href="#">Sitemap</a>
-      </p>
-      <p>Copyright &copy; 2021 adress info</p>
-    </footer>
 
   </div>
   <script>
@@ -93,12 +85,12 @@
               var x = tzs.documents[0].road_address.x;
               var y = tzs.documents[0].road_address.y;
 
-              document.getElementById("출력").innerText = `
-                                    구주소 : ${oldaddress}
-                                    신주소 : ${newaddress}
-                                    경도(x) : ${x}
-                                    위도(y) : ${y}
-                                    `;
+              document.getElementById("출력").innerText =
+                `구주소 : ${oldaddress}
+                 신주소 : ${newaddress}
+                 경도(x) : ${x}
+                 위도(y) : ${y}`;
+
 
               par = {
                 name: newaddress,
