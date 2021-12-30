@@ -5,15 +5,62 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-teal.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>My Homepage</title>
+    <style>
+        a {
+            text-decoration: none;
+        }
+    </style>
+
 </head>
 
 <body>
-    <h1>My Homepage</h1>
-    <ul>
-        <li><a href="./lotto/autolotto.html" target="_blank">로또 자동 추첨기</a></li>
-        <li><a href="https://kjlkmk.github.io/webstory/navi/newjuso.html" target="_blank">주소로 위도 경도 구하기</a></li>
-    </ul>
+    <div class="w3-container w3-padding-small w3-theme-d3">
+        <div class="w3-right">
+            <i class="fa fa-volume-up"></i>
+            <i class="fa fa-wifi"></i>
+            <i class="fa fa-battery-2" id="battery"></i>
+            <span id="time"></span>
+
+        </div>
+    </div>
+
+    <div class="w3-container w3-auto w3-mobile">
+        <div class="w3-container w3-light-grey w3-center">
+            <h1 style="text-shadow:1px 1px 0 #444">My Homepage</h1>
+        </div>
+
+        <ul class="w3-ul w3-border">
+            <li>
+                <h2>WebApp</h2>
+            </li>
+            <li class="w3-hover-blue"><a href="./lotto/autolotto.html" target="_blank">로또 자동
+                    추첨기</a></li>
+            <li class="w3-hover-blue"><a href="https://kjlkmk.github.io/webstory/navi/newjuso.html" target="_blank">주소로
+                    위도 경도 구하기</a></li>
+        </ul>
+    </div>
+
+    <script>
+        navigator.getBattery().then(function (battery) {
+
+            document.getElementById("battery").innerHTML = parseInt(battery.level * 100) + "%";
+
+        });
+
+        var today = new Date();
+
+        var hours = ('0' + today.getHours()).slice(-2);
+        var minutes = ('0' + today.getMinutes()).slice(-2);
+
+
+        var timeString = hours + ':' + minutes;
+        document.getElementById("time").innerHTML = timeString;
+
+    </script>
 
 
 </body>
