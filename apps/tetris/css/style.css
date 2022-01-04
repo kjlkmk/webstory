@@ -66,21 +66,21 @@ body{
 }
 
 .tree{
-    background: #5cf310;
+    background: red;
 }
 
 .bar{
-    background: rgb(72, 74, 247);
+    background: blue;
 
 }
 
 .zee{
-    background: #08cc9b;
+    background: gold;
 
 }
 
 .elLeft{
-    background: #e92f7d;
+    background:orange;
 }
 
 .elRight{
@@ -88,7 +88,7 @@ body{
 }
 
 .square{
-    background: #f31008;
+    background: indigo
 }
 
 .joistic{
