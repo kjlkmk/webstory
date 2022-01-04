@@ -41,7 +41,7 @@ body{
 .score{
     text-align: center;
     font-size: 36px;
-    margin-bottom: 2rem;
+    margin-bottom: 5px;
 }
 
 .playground > ul{
