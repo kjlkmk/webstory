@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <title>퀵서비스 고용보험료 계산기</title>
+</head>
+
+<body>
+    <div class="w3-container">
+
+        <h2 class="w3-center">퀵서비스 고용보험료 계산기</h2>
+        <h3 class="w3-center"><a href="http://share.insungdata.com/img/20211228" target="_blank">인성데이타 고용보험 공지</a></h3>
+        <div class="w3-row-padding">
+            <div class="w3-half w3-container w3-panel w3-blue w3-leftbar">
+                <h3>보수액산정 방법 및 보험요율</h3>
+                <p>
+                <h5>보수액산정(경비율(30.4%)은 추후 변동 가능성 있음)</h5>
+                <h5>->기준 : (요금 - 수수료 - ((요금-수수료)*경비율(30.4%)))</h5>
+                <h5>->보수액*0.7을 사업주와 노무자에게 원천징수함.</h5>
+
+                <h5>예) 요금 10,000원/수수료2,300원인 경우</h5>
+                <h5>10,000원 - 2,300원 = 7,700원</h5>
+                <h5>보수액 : 7,700원 - (7,700원 * 30.4%) = 5,360원 @소숫점은 올림처리</h5>
+                <h5>보험료 : 5,360원 * 0.7% = 38원 @소숫점은 올림처리</h5>
+                <h5>보험료 부담 : 사업주 및 노무자에게서 각각 0.7%씩 1.4%를 징수함.</h5>
+                </p>
+            </div>
+
+            <div class="w3-half w3-container w3-panel w3-yellow w3-leftbar">
+
+                <label class="w3-text-blue">
+                    <h5>수수료율</h5>
+                </label>
+                <input class="w3-input w3-border w3-round-large" type="number" required id="수수료" value="23">
+
+                <label class="w3-text-blue">
+                    <h5>금액</h5>
+                </label>
+                <input class="w3-input w3-border w3-round-large" type="number" required id="요금">
+
+                <button class="w3-btn w3-blue" id="btn">보험료계산</button>
+                <p id="result"></p>
+            </div>
+
+
+        </div>
+        <script>
+            document.getElementById("btn").addEventListener("click", function () {
+                var 요금 = document.getElementById("요금").value;
+                var 수수료 = document.getElementById("수수료").value;
+                var 기본금액 = 요금 - ((요금 * 수수료) / 100);
+                var 보수액 = Math.ceil(기본금액 - ((기본금액 * 30.4) / 100));
+                var 보험료 = Math.ceil((보수액 * 0.7) / 100);
+
+                document.getElementById("result").innerHTML = `
+            <h5>요금에 수수료 ${수수료}% 뺀 금액 : ${기본금액.toLocaleString('ko-KR')}원</h5>
+            <h5>보수액 : ${보수액.toLocaleString('ko-KR')}원</h5>
+            <h5>보험료 : ${보험료.toLocaleString('ko-KR')}원</h5>
+            `;
+
+            });
+        </script>
+</body>
+
+</html>
