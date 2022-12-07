@@ -26,7 +26,7 @@
                 <h5>10,000원 - 2,300원 = 7,700원</h5>
                 <h5>보수액 : 7,700원 - (7,700원 * 30.4%) = 5,360원 @소숫점은 올림처리</h5>
                 <h5>보험료 : 5,360원 * 0.7% = 38원 @소숫점은 올림처리</h5>
-                <h5>보험료 부담 : 사업주 및 노무자에게서 각각 0.7%씩 1.4%를 징수함.</h5>
+                <h5>보험료 부담 : 사업주 및 노무자에게서 각각 0.8%씩 1.6%를 징수함.</h5>
                 </p>
             </div>
 
@@ -36,6 +36,11 @@
                     <h5>수수료율</h5>
                 </label>
                 <input class="w3-input w3-border w3-round-large" type="number" required id="수수료" value="23">
+                
+                <label class="w3-text-blue">
+                    <h5보험료율</h5>
+                </label>
+                <input class="w3-input w3-border w3-round-large" type="number" required id=율보험료율" value="0.8">
 
                 <label class="w3-text-blue">
                     <h5>금액</h5>
@@ -52,13 +57,15 @@
             document.getElementById("btn").addEventListener("click", function () {
                 var 요금 = document.getElementById("요금").value;
                 var 수수료 = document.getElementById("수수료").value;
+                var 보험료율 = document.getElementById("보험료율").value;
                 var 기본금액 = 요금 - ((요금 * 수수료) / 100);
                 var 보수액 = Math.ceil(기본금액 - ((기본금액 * 30.4) / 100));
-                var 보험료 = Math.ceil((보수액 * 0.7) / 100);
+                var 보험료 = Math.ceil((보수액 * 보험료율) / 100);
 
                 document.getElementById("result").innerHTML = `
             <h5>요금에 수수료 ${수수료}% 뺀 금액 : ${기본금액.toLocaleString('ko-KR')}원</h5>
             <h5>보수액 : ${보수액.toLocaleString('ko-KR')}원</h5>
+            <h5>보험료율 : ${보험료율}%</h5>
             <h5>보험료 : ${보험료.toLocaleString('ko-KR')}원</h5>
             `;
 
