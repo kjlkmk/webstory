@@ -10,7 +10,7 @@
     ],
     "name": "Gagebu: Gagebu App",
     "short_name": "Gagebu",
-    "start_url": "https://github.com/kjlkmk/webstory/blob/main/apps/gagyebu/index.html",
+    "start_url": "https://kjlkmk.github.io/webstory/apps/gagyebu/index.html",
     "display": "standalone",
     "description": "A description for your application",
     "lang": " The default language of your application",
@@ -43,14 +43,14 @@
     "related_applications": [
         {
             "platform": "windows",
-            "url": "https://github.com/kjlkmk/webstory/blob/main/apps/gagyebu/index.html"
+            "url": "https://kjlkmk.github.io/webstory/apps/gagyebu/index.html"
         }
     ],
     "prefer_related_applications": false,
     "shortcuts": [
         {
             "name": "Create Gagebu App",
-            "url": "https://github.com/kjlkmk/webstory/blob/main/apps/gagyebu/index.html",
+            "url": "https://kjlkmk.github.io/webstory/apps/gagyebu/index.html",
             "description": "A description of the functionality of this shortcut"
         }
     ]
