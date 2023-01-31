@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
+
+<body>
+    <div class="w3-container w3-center">
+        <div class="w3-container w3-section w3-blue">
+            <h1>My 가계부 검색</h1>
+        </div>
+
+        <div>
+            <p><label>시작 날짜</label>
+                <input id="date1" class="w3-input w3-border" name="start" type="date" required>
+            </p>
+
+            <p><label>마지막 날짜</label>
+                <input id="date2" class="w3-input w3-border" name="end" type="date" required>
+            </p>
+        </div>
+        <div>
+            <button id="btn4" class="w3-button w3-purple">검색</button>
+        </div>
+        <br>
+        <div class="w3-responsive" id="tableContent">
+
+            <table class="w3-table-all">
+                <thead id="thead">
+
+                </thead>
+
+                <tbody id="tbody">
+
+                </tbody>
+
+                <tfoot id="tfoot"></tfoot>
+
+            </table>
+
+        </div>
+
+        <br>
+
+        <div class="w3-responsive" id="tableContent2">
+
+            <table class="w3-table-all">
+                <thead id="thead2">
+
+                </thead>
+
+                <tbody id="tbody2">
+
+                </tbody>
+                <tfoot id="tfoot2"></tfoot>
+
+            </table>
+
+        </div>
+
+        <br>
+
+        <div class="w3-responsive" id="tableContent3">
+
+            <table class="w3-table-all">
+                <thead id="thead3">
+
+                </thead>
+
+                <tbody id="tbody3">
+
+                </tbody>
+                <tfoot id="tfoot3"></tfoot>
+
+            </table>
+
+        </div>
+
+    </div>
+
+    <script src="./js/totalsearch.js"></script>
+
+</body>
+
+</html>

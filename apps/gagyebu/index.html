@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="./css/app.css">
+
+    <link rel="manifest" href="manifest.json" />
+    <script>navigator.serviceWorker.register("service-worker.js")</script>
+</head>
+
+<body onload="times();">
+
+    <div class="w3-container">
+
+        <div class="w3-container w3-yellow w3-center head">
+            <h6>퀵수입 지출 <span id="time"></span></h6>
+        </div>
+
+        <div class="w3-row">
+
+            <div class="w3-col s6  w3-center">
+
+                <div class="w3-container">
+
+                    <label class="w3-text-teal"><b>날짜</b></label>
+                    <input class="w3-input w3-border w3-light-grey" type="date" id="date" required name="date">
+
+                    <label class="w3-text-teal"><b>현금</b></label>
+                    <input class="w3-input w3-border w3-light-grey total1" type="number" id="cash1" name="cash1">
+
+                    <label class="w3-text-teal"><b>외상</b></label>
+                    <input class="w3-input w3-border w3-light-grey total1" type="number" id="cash2" name="cash2">
+
+                    <label class="w3-text-teal"><b>통장</b></label>
+                    <input class="w3-input w3-border w3-light-grey total1" type="number" id="cash3" name="cash3">
+
+                    <label class="w3-text-teal"><b>신용</b></label>
+                    <input class="w3-input w3-border w3-light-grey total1" type="number" id="cash4" name="cash4">
+
+                    <label class="w3-text-teal"><b>합계</b></label>
+                    <input class="w3-input w3-border w3-light-grey" type="number" id="cash5" readonly="readonly"
+                        name="cash5">
+
+                </div>
+
+            </div>
+
+            <div class="w3-col s6 w3-center">
+
+                <div class="w3-container">
+
+                    <label class="w3-text-teal"><b>기름</b></label>
+                    <input class="w3-input w3-border w3-light-grey" type="number" id="cash6" name="cash6">
+
+                    <label class="w3-text-teal"><b>수리비</b></label>
+                    <input class="w3-input w3-border w3-light-grey" type="number" id="cash7" name="cash7">
+
+                    <label class="w3-text-teal"><b>기타</b></label>
+                    <input class="w3-input w3-border w3-light-grey" type="number" id="cash8" name="cash8">
+
+                    <label class="w3-text-teal"><b>플비</b></label>
+                    <input class="w3-input w3-border w3-light-grey" type="number" id="cash9" name="cash9"
+                        placeholder="2876">
+
+                    <label class="w3-text-teal"><b>수수료</b></label>
+                    <input class="w3-input w3-border w3-light-grey" type="number" id="cash10" name="cash10">
+
+                    <label class="w3-text-teal"><b>경</b></label>
+                    <input class="w3-input w3-border w3-light-grey" type="number" id="cash11" name="cash11">
+
+                    <label class="w3-text-teal"><b>지출합계</b></label>
+                    <input class="w3-input w3-border w3-light-grey" type="number" id="cash12" readonly="readonly"
+                        name="cash12">
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="w3-container w3-center">
+
+            <label class="w3-text-teal"><b>실제수입</b></label>
+            <input class="w3-input w3-border w3-light-grey" type="number" id="cash13" readonly="readonly" name="cash13">
+
+        </div>
+
+
+        <div class="w3-container w3-blue w3-center">
+            <h6>우리집 지출</h6>
+        </div>
+
+        <div class="w3-row">
+            <div class="w3-col s6  w3-center">
+
+                <div class="w3-container">
+
+                    <label class="w3-text-teal"><b>우리집카드</b></label>
+                    <input class="w3-input w3-border w3-light-grey" type="number" id="cash14" name="cash14">
+
+                    <label class="w3-text-teal"><b>우리집현금</b></label>
+                    <input class="w3-input w3-border w3-light-grey" type="number" id="cash15" name="cash15">
+
+                    <label class="w3-text-teal"><b>우리집합계</b></label>
+                    <input class="w3-input w3-border w3-light-grey" type="number" id="cash16" readonly="readonly"
+                        name="cash16">
+
+                </div>
+
+            </div>
+
+            <div class="w3-col s6 w3-center">
+
+                <div class="w3-container">
+
+                    <label class="w3-text-teal"><b>기타수입</b></label>
+                    <input class="w3-input w3-border w3-light-grey" type="number" id="cash17" name="cash17">
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="w3-container w3-center">
+
+            <label class="w3-text-teal"><b>우리집실제지출</b></label>
+            <input class="w3-input w3-border w3-light-grey" type="number" id="cash18" readonly="readonly" name="cash18">
+
+        </div>
+
+        <div class="w3-row head">
+
+            <div class="w3-col s3  w3-center">
+                <button class="w3-btn w3-blue-grey w3-border-red w3-round-large" id="btn1">클리어</button>
+            </div>
+
+            <div class="w3-col s3  w3-center">
+                <a class="w3-button w3-indigo w3-round-large" href="./total.html">월집계</a>
+            </div>
+
+            <div class="w3-col s3  w3-center">
+                <a class="w3-button w3-indigo w3-round-large" href="./totalsearch.html">쿼리</a>
+            </div>
+
+            <div class="w3-col s3  w3-center">
+                <button class="w3-btn w3-blue-grey w3-border-red w3-round-large" id="btn2" disabled>업데이트</button>
+            </div>
+
+        </div>
+
+        <div class="w3-row head">
+
+            <div class="w3-col s3  w3-center">
+                <button class="w3-btn w3-white w3-border w3-border-red w3-round-large" id="btn3">뒤로</button>
+            </div>
+
+            <div class="w3-col s3  w3-center">
+                <button class="w3-btn w3-blue w3-border-red w3-round-large" id="btn4" disabled>저장</button>
+            </div>
+
+            <div class="w3-col s3  w3-center">
+                <button class="w3-btn w3-red w3-border-red w3-round-large" id="btn5" disabled>삭제</button>
+            </div>
+
+            <div class="w3-col s3  w3-center">
+                <button class="w3-btn w3-white w3-border w3-border-red w3-round-large" id="btn6">앞으로</button>
+            </div>
+
+        </div>
+
+        <div class="w3-row head">
+
+            <div class="w3-col s3  w3-center">
+                <a class="w3-button w3-indigo w3-round-large" href="./backup.html">백업</a>
+            </div>
+
+            <div class="w3-col s3  w3-center">
+                <button class="w3-btn w3-blue-grey w3-border-red w3-round-large" disabled>----</button>
+            </div>
+
+            <div class=" w3-col s3 w3-center">
+                <button class="w3-btn w3-blue-grey w3-border-red w3-round-large" disabled>----</button>
+            </div>
+
+            <div class="w3-col s3  w3-center">
+                <a class="w3-button w3-indigo w3-round-large" href="./restore.html">복구</a>
+            </div>
+
+        </div>
+
+    </div>
+    <script src="./js/app.js"></script>
+
+
+</body>
+
+</html>
