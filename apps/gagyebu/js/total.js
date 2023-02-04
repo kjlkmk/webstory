@@ -16,7 +16,7 @@ dbReq.addEventListener('upgradeneeded', function (event) {
     }
 });
 
-window.onload = function serchInfo () {
+window.onload = function () {
 
     var d = new Date();
     var year = d.getFullYear();
