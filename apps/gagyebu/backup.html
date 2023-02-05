@@ -109,7 +109,8 @@
         }
         document.getElementById('signout_button').style.visibility = 'visible';
         document.getElementById('authorize_button').innerText = 'Refresh';
-        await listMajors();
+        // await listMajors();
+        await create("가계부test", callback);
       };
 
       if (gapi.client.getToken() === null) {
@@ -145,7 +146,7 @@
       try {
         // Fetch first 10 files
         response = await gapi.client.sheets.spreadsheets.values.get({
-          spreadsheetId: '1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms',
+          spreadsheetId: '182yvbr4iihkofOaDtgmnppyYPeyhlGkQTa0b29J9v_s',
           range: 'Class Data!A2:E',
         });
       } catch (err) {
@@ -168,6 +169,22 @@
         (str, row) => `${str}${row[0]}, ${row[4]}\n`,
         'Name, Major:\n');
       document.getElementById('content').innerText = output;
+    }
+
+    function create (title, callback) {
+      try {
+        gapi.client.sheets.spreadsheets.create({
+          properties: {
+            title: title,
+          },
+        }).then((response) => {
+          if (callback) callback(response);
+          console.log('Spreadsheet ID: ' + response.result.spreadsheetId);
+        });
+      } catch (err) {
+        document.getElementById('content').innerText = err.message;
+        return;
+      }
     }
   </script>
   <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
