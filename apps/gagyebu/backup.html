@@ -188,7 +188,7 @@
     function indexeddb_All () {
       let values = [];
       let data = [];
-      let store = db.transaction('topics', 'readonly').objectStore('topics');
+      let store = db.transaction('calculate', 'readonly').objectStore('calculate');
       let getAllReq = store.getAll();
       getAllReq.addEventListener('success', function (event) {
         console.log(event.target.result);
