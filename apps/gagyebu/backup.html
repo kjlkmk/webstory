@@ -7,7 +7,7 @@
 </head>
 
 <body>
-  <p>Sheets API Quickstart</p>
+  <p>Sheets API Update</p>
 
   <!--Add buttons to initiate auth sequence and sign out-->
   <button id="authorize_button" onclick="handleAuthClick()">Authorize</button>
@@ -147,7 +147,7 @@
       document.getElementById('content').innerText = output;
     }
 
-    async function updateValues (spreadsheetId, range, valueInputOption, _values, callback) {
+    async function updateValues () {
       let values = [
         [
           11, 12, 13
@@ -160,7 +160,7 @@
       };
       try {
         gapi.client.sheets.spreadsheets.values.update({
-          spreadsheetId: spreadsheetId,
+          spreadsheetId: "182yvbr4iihkofOaDtgmnppyYPeyhlGkQTa0b29J9v_s",
           range: "시트1!A1:Z",
           valueInputOption: "USER_ENTERED",
           resource: body,
