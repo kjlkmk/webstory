@@ -2,18 +2,26 @@
 <html>
 
 <head>
-  <title>Sheets API Quickstart</title>
+  <title>스프레드시트로 백업</title>
   <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="./css/app.css">
+  <script src="./js/indexeddb.js"></script>
 </head>
 
-<body>
-  <p>Sheets API Update</p>
+<body class="w3-container">
+  <div class="w3-container w3-yellow w3-center">
+    <h2>구글 스프레드 시트로 백업</h2>
+  </div>
+
 
   <!--Add buttons to initiate auth sequence and sign out-->
   <button id="authorize_button" onclick="handleAuthClick()">Authorize</button>
   <button id="signout_button" onclick="handleSignoutClick()">Sign Out</button>
 
-  <pre id="content" style="white-space: pre-wrap;"></pre>
+  <pre id="content" class="w3-center" style="white-space: pre-wrap;"></pre>
 
   <script type="text/javascript">
     /* exported gapiLoaded */
@@ -24,7 +32,7 @@
     // TODO(developer): Set to client ID and API key from the Developer Console
     const CLIENT_ID = '95910735919-d8vgmke70ulls62dukgidc5jjqbt4uao.apps.googleusercontent.com';
     const API_KEY = 'AIzaSyCmic3VdQ15L8_HkTxhlM_9tUC5H2GMzFo';
-    const spreadsheetId = "182yvbr4iihkofOaDtgmnppyYPeyhlGkQTa0b29J9v_s";
+
     // Discovery doc URL for APIs used by the quickstart
     const DISCOVERY_DOC = 'https://sheets.googleapis.com/$discovery/rest?version=v4';
 
@@ -148,13 +156,14 @@
     }
 
     function updateValues () {
-      let values = [
-        [
-          11, 12, 13
-        ], [14, 15, 16]
-        // Additional rows ...
-      ];
+      // let values = [
+      //   [
+      //     11, 12, 13
+      //   ], [14, 15, 16]
+      //   // Additional rows ...
+      // ];
       // values = _values;
+      let values = indexeddb_All();
       const body = {
         values: values,
       };
@@ -174,6 +183,20 @@
         document.getElementById('content').innerText = err.message;
         return;
       }
+    }
+
+    function indexeddb_All () {
+      let values = [];
+      let data = [];
+      let store = db.transaction('topics', 'readonly').objectStore('topics');
+      let getAllReq = store.getAll();
+      getAllReq.addEventListener('success', function (event) {
+        console.log(event.target.result);
+        values = event.target.result;
+        var data = values.map(r => [r.date, r.cash1, r.cash2, r.cash3, r.cash4, r.cash5, r.cash6, r.cash7,
+        r.cash8, r.cash9, r.cash10, r.cash11, r.cash12, r.cash13, r.cash14, r.cash15, r.cash16, r.cash17, r.cash18]);
+      });
+      return data;
     }
   </script>
   <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
