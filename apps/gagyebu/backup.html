@@ -24,13 +24,13 @@
     // TODO(developer): Set to client ID and API key from the Developer Console
     const CLIENT_ID = '95910735919-d8vgmke70ulls62dukgidc5jjqbt4uao.apps.googleusercontent.com';
     const API_KEY = 'AIzaSyCmic3VdQ15L8_HkTxhlM_9tUC5H2GMzFo';
-
+    const spreadsheetId = "182yvbr4iihkofOaDtgmnppyYPeyhlGkQTa0b29J9v_s";
     // Discovery doc URL for APIs used by the quickstart
     const DISCOVERY_DOC = 'https://sheets.googleapis.com/$discovery/rest?version=v4';
 
     // Authorization scopes required by the API; multiple scopes can be
     // included, separated by spaces.
-    const SCOPES = 'https://www.googleapis.com/auth/spreadsheets.readonly';
+    const SCOPES = 'https://www.googleapis.com/auth/spreadsheets';
 
     let tokenClient;
     let gapiInited = false;
@@ -91,7 +91,8 @@
         }
         document.getElementById('signout_button').style.visibility = 'visible';
         document.getElementById('authorize_button').innerText = 'Refresh';
-        await listMajors();
+        // await listMajors();
+        await updateValues();
       };
 
       if (gapi.client.getToken() === null) {
@@ -144,6 +145,34 @@
         (str, row) => `${str}${row[0]}, ${row[4]}\n`,
         'Name, Major:\n');
       document.getElementById('content').innerText = output;
+    }
+
+    async function updateValues (spreadsheetId, range, valueInputOption, _values, callback) {
+      let values = [
+        [
+          11, 12, 13
+        ], [14, 15, 16]
+        // Additional rows ...
+      ];
+      values = _values;
+      const body = {
+        values: values,
+      };
+      try {
+        gapi.client.sheets.spreadsheets.values.update({
+          spreadsheetId: spreadsheetId,
+          range: "시트1!A1:Z",
+          valueInputOption: "USER_ENTERED",
+          resource: body,
+        }).then((response) => {
+          const result = response.result;
+          console.log(`${result.updatedCells} cells updated.`);
+          if (callback) callback(response);
+        });
+      } catch (err) {
+        document.getElementById('content').innerText = err.message;
+        return;
+      }
     }
   </script>
   <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
