@@ -15,7 +15,7 @@
   <div class="w3-container w3-center">
 
 
-    <div class="w3-card-4">
+    <div class="w3-card-4 w3-margin">
 
       <div class="w3-container w3-green">
         <h2>백업할 구글시트</h2>
@@ -192,6 +192,7 @@
           const result = response.result;
           console.log(result);
           console.log(`${result.updatedCells} cells updated.`);
+          alert(`${result.updatedCells} cells updated.`)
           // if (callback) callback(response);
         });
       } catch (err) {
