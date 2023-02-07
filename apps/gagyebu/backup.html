@@ -101,6 +101,7 @@
         document.getElementById('authorize_button').innerText = 'Refresh';
         // await listMajors();
         let values = await indexeddb_All();
+        console.log(values);
         await updateValues(values);
       };
 
