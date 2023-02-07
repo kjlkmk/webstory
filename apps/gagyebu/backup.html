@@ -100,7 +100,8 @@
         document.getElementById('signout_button').style.visibility = 'visible';
         document.getElementById('authorize_button').innerText = 'Refresh';
         // await listMajors();
-        await updateValues();
+        let values = await indexeddb_All();
+        await updateValues(values);
       };
 
       if (gapi.client.getToken() === null) {
@@ -155,7 +156,7 @@
       document.getElementById('content').innerText = output;
     }
 
-    async function updateValues () {
+    async function updateValues (values) {
       // let values = [
       //   [
       //     11, 12, 13
@@ -163,14 +164,14 @@
       //   // Additional rows ...
       // ];
       // values = _values;
-      let values = await indexeddb_All();
+
       const body = {
         values: values,
       };
       try {
         gapi.client.sheets.spreadsheets.values.update({
           spreadsheetId: "182yvbr4iihkofOaDtgmnppyYPeyhlGkQTa0b29J9v_s",
-          range: "시트1!A1:Z",
+          range: "시트1!A:Z",
           valueInputOption: "USER_ENTERED",
           resource: body,
         }).then((response) => {
