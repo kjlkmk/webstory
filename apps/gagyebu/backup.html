@@ -100,9 +100,9 @@
         document.getElementById('signout_button').style.visibility = 'visible';
         document.getElementById('authorize_button').innerText = 'Refresh';
         // await listMajors();
-        let values = await indexeddb_All();
-        console.log(values);
-        await updateValues(values);
+        await indexeddb_All();
+        // console.log(values);
+        // await updateValues(values);
       };
 
       if (gapi.client.getToken() === null) {
@@ -200,7 +200,7 @@
         r.cash8, r.cash9, r.cash10, r.cash11, r.cash12, r.cash13, r.cash14, r.cash15, r.cash16, r.cash17, r.cash18]);
 
         console.log(data);
-        return data;
+        updateValues(values);
       });
 
 
