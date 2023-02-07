@@ -173,7 +173,7 @@
         gapi.client.sheets.spreadsheets.values.update({
           spreadsheetId: "182yvbr4iihkofOaDtgmnppyYPeyhlGkQTa0b29J9v_s",
           range: "시트1!A1:Z1000",
-          valueInputOption: "USER_ENTERED",
+          valueInputOption: "RAW",
           resource: body,
         }).then((response) => {
           const result = response.result;
