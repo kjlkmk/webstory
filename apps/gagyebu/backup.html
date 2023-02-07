@@ -155,7 +155,7 @@
       document.getElementById('content').innerText = output;
     }
 
-    function updateValues () {
+    async function updateValues () {
       // let values = [
       //   [
       //     11, 12, 13
@@ -163,7 +163,7 @@
       //   // Additional rows ...
       // ];
       // values = _values;
-      let values = indexeddb_All();
+      let values = await indexeddb_All();
       const body = {
         values: values,
       };
