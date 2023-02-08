@@ -114,7 +114,8 @@
         document.getElementById('signout_button').style.visibility = 'visible';
         document.getElementById('authorize_button').innerText = 'Refresh';
         // await listMajors();
-        await indexeddb_All();
+        // await indexeddb_All();
+        await create();
 
       };
 
@@ -201,7 +202,21 @@
       }
     }
 
-
+    function create () {
+      try {
+        gapi.client.sheets.spreadsheets.create({
+          properties: {
+            title: "가계부test",
+          },
+        }).then((response) => {
+          // if (callback) callback(response);
+          console.log('Spreadsheet ID: ' + response.result.spreadsheetId);
+        });
+      } catch (err) {
+        document.getElementById('content').innerText = err.message;
+        return;
+      }
+    }
 
     function indexeddb_All () {
 
