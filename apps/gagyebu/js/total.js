@@ -2,6 +2,7 @@ const dbReq = indexedDB.open('kjlkmkDB', 1);
 let db;
 dbReq.addEventListener('success', function (event) {
     db = event.target.result;
+    start(db);
 });
 dbReq.addEventListener('error', function (event) {
     const error = event.target.error;
@@ -16,8 +17,7 @@ dbReq.addEventListener('upgradeneeded', function (event) {
     }
 });
 
-window.onload = function () {
-
+function times () {
     var d = new Date();
     var year = d.getFullYear();
     var month = (d.getMonth() + 1);
@@ -31,6 +31,20 @@ window.onload = function () {
 
     var start = year + "-" + month + "-" + "01";
     var end = year + "-" + month + "-" + day;
+
+    var result = [start, end];
+
+    return result;
+}
+
+
+
+async function start (db) {
+
+    var timesData = await times();
+   
+    var start = timesData[0];
+    var end = timesData[1];
 
 
     document.getElementById("thead").innerHTML = "";

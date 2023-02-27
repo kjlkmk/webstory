@@ -2,41 +2,19 @@
 <html>
 
 <head>
-  <title>스프레드시트로 백업</title>
+  <title>Sheets API Quickstart</title>
   <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-  <link rel="stylesheet" href="./css/app.css">
-  <script src="./js/indexeddb.js"></script>
 </head>
 
 <body>
-  <div class="w3-container w3-center">
+  <p>Sheets API Quickstart</p>
 
+  <!--Add buttons to initiate auth sequence and sign out-->
+  <button id="authorize_button" onclick="handleAuthClick()">Authorize</button>
+  <button id="signout_button" onclick="handleSignoutClick()">Sign Out</button>
 
-    <div class="w3-card-4 w3-margin">
+  <pre id="content" style="white-space: pre-wrap;"></pre>
 
-      <div class="w3-container w3-green">
-        <h2>백업할 구글시트</h2>
-      </div>
-
-      <form class="w3-container">
-
-        <label>구글시트 아이디</label>
-        <input class="w3-input" id="sheet" type="text" required placeholder="구글시트 아이디를 입력해주세요.">
-
-      </form>
-
-      <div class="w3-margin">
-        <!--Add buttons to initiate auth sequence and sign out-->
-        <button id="authorize_button" onclick="handleAuthClick()">Authorize</button>
-        <button id="signout_button" onclick="handleSignoutClick()">Sign Out</button>
-      </div>
-      <pre id="content" class="w3-center" style="white-space: pre-wrap;"></pre>
-
-    </div>
-  </div>
   <script type="text/javascript">
     /* exported gapiLoaded */
     /* exported gisLoaded */
@@ -52,7 +30,7 @@
 
     // Authorization scopes required by the API; multiple scopes can be
     // included, separated by spaces.
-    const SCOPES = 'https://www.googleapis.com/auth/spreadsheets';
+    const SCOPES = 'https://www.googleapis.com/auth/spreadsheets.readonly';
 
     let tokenClient;
     let gapiInited = false;
@@ -113,10 +91,7 @@
         }
         document.getElementById('signout_button').style.visibility = 'visible';
         document.getElementById('authorize_button').innerText = 'Refresh';
-        // await listMajors();
-        // await indexeddb_All();
-        await create();
-
+        await listMajors();
       };
 
       if (gapi.client.getToken() === null) {
@@ -169,74 +144,6 @@
         (str, row) => `${str}${row[0]}, ${row[4]}\n`,
         'Name, Major:\n');
       document.getElementById('content').innerText = output;
-    }
-
-    async function updateValues (values) {
-      // let values = [
-      //   [
-      //     11, 12, 13
-      //   ], [14, 15, 16]
-      //   // Additional rows ...
-      // ];
-      // values = _values;
-      const sheetId = document.getElementById("sheet").value;
-      const body = {
-        values: values,
-      };
-      try {
-        gapi.client.sheets.spreadsheets.values.update({
-          spreadsheetId: sheetId,
-          range: "시트1!A1:Z1000",
-          valueInputOption: "RAW",
-          resource: body,
-        }).then((response) => {
-          const result = response.result;
-          console.log(result);
-          console.log(`${result.updatedCells} cells updated.`);
-          alert(`${result.updatedCells} cells updated.`);
-          // if (callback) callback(response);
-        });
-      } catch (err) {
-        document.getElementById('content').innerText = err.message;
-        return;
-      }
-    }
-
-    function create (result) {
-      try {
-        gapi.client.sheets.spreadsheets.create({
-          properties: {
-            title: "가계부test",
-          },
-        }).then((response) => {
-          if (callback) callback(response);
-          console.log('Spreadsheet ID: ' + response.result.spreadsheetId);
-        });
-      } catch (err) {
-        document.getElementById('content').innerText = err.message;
-        return;
-      }
-    }
-
-    function result (response) {
-      alert(response.result.spreadsheetId);
-    }
-
-    function indexeddb_All () {
-
-      let store = db.transaction('calculate', 'readonly').objectStore('calculate');
-      let getAllReq = store.getAll();
-      getAllReq.addEventListener('success', function (event) {
-        console.log(event.target.result);
-        let values = event.target.result;
-        let data = values.map(r => [r.date, r.cash1, r.cash2, r.cash3, r.cash4, r.cash5, r.cash6, r.cash7,
-        r.cash8, r.cash9, r.cash10, r.cash11, r.cash12, r.cash13, r.cash14, r.cash15, r.cash16, r.cash17, r.cash18]);
-
-        console.log(data);
-        updateValues(data);
-      });
-
-
     }
   </script>
   <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>

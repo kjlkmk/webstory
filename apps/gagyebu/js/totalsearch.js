@@ -2,6 +2,7 @@ const dbReq = indexedDB.open('kjlkmkDB', 1);
 let db;
 dbReq.addEventListener('success', function (event) {
     db = event.target.result;
+    serchInfo(db);
 });
 dbReq.addEventListener('error', function (event) {
     const error = event.target.error;
@@ -18,7 +19,7 @@ dbReq.addEventListener('upgradeneeded', function (event) {
 
 document.getElementById("btn4").addEventListener("click", serchInfo);
 
-function serchInfo () {
+function serchInfo (db) {
     var start = document.getElementById("date1").value;
     var end = document.getElementById("date2").value;
 
