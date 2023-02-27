@@ -115,7 +115,8 @@
         document.getElementById('authorize_button').innerText = 'Refresh';
         // await listMajors();
         // await indexeddb_All();
-        await create();
+        var title = "가계부test"
+        await create(title, callback);
 
       };
 
@@ -202,11 +203,11 @@
       }
     }
 
-    function create (callback) {
+    function create (title, callback) {
       try {
         gapi.client.sheets.spreadsheets.create({
           properties: {
-            title: "가계부test",
+            title: title,
           },
         }).then((response) => {
           if (callback) callback(response);
