@@ -33,6 +33,11 @@
         <button id="authorize_button" onclick="handleAuthClick()">Authorize</button>
         <button id="signout_button" onclick="handleSignoutClick()">Sign Out</button>
       </div>
+      <div class="w3-margin">
+        <!--Add buttons to initiate auth sequence and sign out-->
+        <button id="backup" onclick="backupClick()">백업</button>
+        <button id="restore" onclick="restoreClick()">불러오기</button>
+      </div>
       <pre id="content" class="w3-center" style="white-space: pre-wrap;"></pre>
 
     </div>
@@ -60,6 +65,8 @@
 
     document.getElementById('authorize_button').style.visibility = 'hidden';
     document.getElementById('signout_button').style.visibility = 'hidden';
+    document.getElementById('backup').style.visibility = 'hidden';
+    document.getElementById('restore').style.visibility = 'hidden';
 
     /**
      * Callback after api.js is loaded.
@@ -100,6 +107,7 @@
     function maybeEnableButtons () {
       if (gapiInited && gisInited) {
         document.getElementById('authorize_button').style.visibility = 'visible';
+
       }
     }
 
@@ -113,10 +121,12 @@
         }
         document.getElementById('signout_button').style.visibility = 'visible';
         document.getElementById('authorize_button').innerText = 'Refresh';
+        document.getElementById('backup').style.visibility = 'visible';
+        document.getElementById('restore').style.visibility = 'visible';
         // await listMajors();
         // await indexeddb_All();
-        var title = "가계부test"
-        await create(title, callback);
+        // var title = "가계부test"
+        // await create(title, callback);
 
       };
 
@@ -130,6 +140,15 @@
       }
     }
 
+    function backupClick () {
+      var title = "가계부test"
+      create(title, callback);
+    }
+
+    function restoreClick () {
+      listMajors();
+    }
+
     /**
      *  Sign out the user upon button click.
      */
@@ -141,6 +160,8 @@
         document.getElementById('content').innerText = '';
         document.getElementById('authorize_button').innerText = 'Authorize';
         document.getElementById('signout_button').style.visibility = 'hidden';
+        document.getElementById('backup').style.visibility = 'hidden';
+        document.getElementById('restore').style.visibility = 'hidden';
       }
     }
 
@@ -240,7 +261,23 @@
         updateValues(data, spreadsheetId);
       });
 
+    }
 
+    function getValues (spreadsheetId, range, callback) {
+      try {
+        gapi.client.sheets.spreadsheets.values.get({
+          spreadsheetId: spreadsheetId,
+          range: range,
+        }).then((response) => {
+          const result = response.result;
+          const numRows = result.values ? result.values.length : 0;
+          console.log(`${numRows} rows retrieved.`);
+          if (callback) callback(response);
+        });
+      } catch (err) {
+        document.getElementById('content').innerText = err.message;
+        return;
+      }
     }
   </script>
   <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
