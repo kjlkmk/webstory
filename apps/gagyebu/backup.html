@@ -172,7 +172,7 @@
       document.getElementById('content').innerText = output;
     }
 
-    async function updateValues (values) {
+    async function updateValues (values, spreadsheetId) {
       // let values = [
       //   [
       //     11, 12, 13
@@ -180,13 +180,13 @@
       //   // Additional rows ...
       // ];
       // values = _values;
-      const sheetId = document.getElementById("sheet").value;
+      // const sheetId = document.getElementById("sheet").value;
       const body = {
         values: values,
       };
       try {
         gapi.client.sheets.spreadsheets.values.update({
-          spreadsheetId: sheetId,
+          spreadsheetId: spreadsheetId,
           range: "시트1!A1:Z1000",
           valueInputOption: "RAW",
           resource: body,
@@ -221,9 +221,11 @@
 
     function callback (response) {
       alert(response.result.spreadsheetId);
+      var spreadsheetId = response.result.spreadsheetId;
+      indexeddb_All(spreadsheetId)
     }
 
-    function indexeddb_All () {
+    function indexeddb_All (spreadsheetId) {
 
       let store = db.transaction('calculate', 'readonly').objectStore('calculate');
       let getAllReq = store.getAll();
@@ -234,7 +236,7 @@
         r.cash8, r.cash9, r.cash10, r.cash11, r.cash12, r.cash13, r.cash14, r.cash15, r.cash16, r.cash17, r.cash18]);
 
         console.log(data);
-        updateValues(data);
+        updateValues(data, spreadsheetId);
       });
 
 
