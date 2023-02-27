@@ -182,6 +182,7 @@
         return;
       }
       const range = response.result;
+      console.log(response);
       if (!range || !range.values || range.values.length == 0) {
         document.getElementById('content').innerText = 'No values found.';
         return;
