@@ -202,7 +202,7 @@
       }
     }
 
-    function create (result) {
+    function create (callback) {
       try {
         gapi.client.sheets.spreadsheets.create({
           properties: {
@@ -218,7 +218,7 @@
       }
     }
 
-    function result (response) {
+    function callback (response) {
       alert(response.result.spreadsheetId);
     }
 
