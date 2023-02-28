@@ -146,8 +146,8 @@
     }
 
     function restoreClick () {
-      // listMajors();
-      dbClear();
+      listMajors();
+      // dbClear();
     }
 
     /**
@@ -190,7 +190,7 @@
       }
       // Flatten to string to display
       const data = range.values;
-      return data;
+      addDb(data);
 
     }
 
