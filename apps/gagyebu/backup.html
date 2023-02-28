@@ -190,15 +190,16 @@
       }
       // Flatten to string to display
       const data = range.values;
-      addDb(data);
+      dbClear(data);
 
     }
 
-    async function dbClear () {
+    async function dbClear (data) {
       let store = db.transaction('calculate', 'readwrite').objectStore('calculate');
       let clearAllReq = store.clear();
+      let data = data;
       clearAllReq.addEventListener('success', function (event) {
-        var data = listMajors();
+
         for (var i = 0; i < data.length; i++) {
           addDb(data[i]);
         }
