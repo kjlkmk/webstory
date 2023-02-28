@@ -146,7 +146,8 @@
     }
 
     function restoreClick () {
-      listMajors();
+      // listMajors();
+      dbClear();
     }
 
     /**
@@ -192,6 +193,16 @@
         (str, row) => `${str}${row[0]}, ${row[4]}\n`,
         'Name, Major:\n');
       document.getElementById('content').innerText = output;
+    }
+
+    function dbClear () {
+      let store = db.transaction('calculate', 'readwrite').objectStore('calculate');
+      let clearAllReq = store.clear();
+      clearAllReq.addEventListener('success', function (event) {
+        console.log(event.target.result);
+        alert(event.target.result);
+
+      });
     }
 
     async function updateValues (values, spreadsheetId) {
@@ -255,31 +266,31 @@
         console.log(event.target.result);
         let values = event.target.result;
         let data = values.map(r => [r.date, r.cash1, r.cash2, r.cash3, r.cash4, r.cash5, r.cash6, r.cash7,
-        r.cash8, r.cash9, r.cash10, r.cash11, r.cash12, r.cash13, r.cash14, r.cash15, r.cash16, r.cash17, r.cash18]);
+        r.cash8, r.cash9, r.cash10, r.cash11, r.cash12, r.cash13, r.cash14, r.cash15, r.cash16, r.cash17, r.cash18, r.timestamp]);
 
         console.log(data);
-        data.unshift(["날짜", "현금", "외상", "통장", "신용", "합계", "기름", "수리비", "기타", "플비", "수수료", "경", "지출합계", "실제수입", "우리집카드", "우리집현금", "우리집합계", "기타수입", "우리집실제지출"]);
+        data.unshift(["날짜", "현금", "외상", "통장", "신용", "합계", "기름", "수리비", "기타", "플비", "수수료", "경", "지출합계", "실제수입", "우리집카드", "우리집현금", "우리집합계", "기타수입", "우리집실제지출", "타임스템프"]);
         updateValues(data, spreadsheetId);
       });
 
     }
 
-    function getValues (spreadsheetId, range, callback) {
-      try {
-        gapi.client.sheets.spreadsheets.values.get({
-          spreadsheetId: spreadsheetId,
-          range: range,
-        }).then((response) => {
-          const result = response.result;
-          const numRows = result.values ? result.values.length : 0;
-          console.log(`${numRows} rows retrieved.`);
-          if (callback) callback(response);
-        });
-      } catch (err) {
-        document.getElementById('content').innerText = err.message;
-        return;
-      }
-    }
+    // function getValues (spreadsheetId, range, callback) {
+    //   try {
+    //     gapi.client.sheets.spreadsheets.values.get({
+    //       spreadsheetId: spreadsheetId,
+    //       range: range,
+    //     }).then((response) => {
+    //       const result = response.result;
+    //       const numRows = result.values ? result.values.length : 0;
+    //       console.log(`${numRows} rows retrieved.`);
+    //       if (callback) callback(response);
+    //     });
+    //   } catch (err) {
+    //     document.getElementById('content').innerText = err.message;
+    //     return;
+    //   }
+    // }
   </script>
   <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
   <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>
