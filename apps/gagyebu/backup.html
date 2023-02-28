@@ -176,7 +176,7 @@
         // Fetch first 10 files
         response = await gapi.client.sheets.spreadsheets.values.get({
           spreadsheetId: '1EaynJr7KL18xiabQXYldbYPVwoGOjykT_XEulpbhGc0',
-          range: 'DATA!A2:S',
+          range: 'DATA!A2:E',
         });
       } catch (err) {
         document.getElementById('content').innerText = err.message;
@@ -189,19 +189,59 @@
         return;
       }
       // Flatten to string to display
-      const output = range.values.reduce(
-        (str, row) => `${str}${row[0]}, ${row[4]}\n`,
-        'Name, Major:\n');
-      document.getElementById('content').innerText = output;
+      const data = range.values;
+      return data;
+
     }
 
-    function dbClear () {
+    async function dbClear () {
       let store = db.transaction('calculate', 'readwrite').objectStore('calculate');
       let clearAllReq = store.clear();
       clearAllReq.addEventListener('success', function (event) {
-        console.log(event.target.result);
-        alert(event.target.result);
+        var data = await listMajors();
+        for (var i = 0; i < data.length; i++) {
+          await addDb(data[i]);
+        }
 
+      });
+    }
+
+    function addDb (data) {
+      let store = db.transaction('calculate', 'readwrite').objectStore('calculate');
+
+      let addReq = store.add({
+        date: data[0],
+        cash1: data[1],
+        cash2: data[2],
+        cash3: data[3],
+        cash4: data[4],
+        cash5: data[5],
+        cash6: data[6],
+        cash7: data[7],
+        cash8: data[8],
+        cash9: data[9],
+        cash10: data[10],
+        cash11: data[11],
+        cash12: data[12],
+        cash13: data[13],
+        cash14: data[14],
+        cash15: data[15],
+        cash16: data[16],
+        cash17: data[17],
+        cash18: data[18],
+        timestamp: data[19]
+      });
+
+      addReq.addEventListener('success', function (event) {
+        // console.log(event);
+        // alert("저장되었습니다.");
+        // ClearCell();
+      });
+
+      addReq.addEventListener('error', function (event) {
+        // const error = event.target.error;
+        // console.log('error', error.name);
+        // alert("저장에 실패하였습니다.");
       });
     }
 
@@ -220,7 +260,7 @@
       try {
         gapi.client.sheets.spreadsheets.values.update({
           spreadsheetId: spreadsheetId,
-          range: "시트1!A1:Z1000",
+          range: "시트1!A1:Z",
           valueInputOption: "RAW",
           resource: body,
         }).then((response) => {
