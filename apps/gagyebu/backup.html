@@ -198,9 +198,9 @@
       let store = db.transaction('calculate', 'readwrite').objectStore('calculate');
       let clearAllReq = store.clear();
       clearAllReq.addEventListener('success', function (event) {
-        var data = await listMajors();
+        var data = listMajors();
         for (var i = 0; i < data.length; i++) {
-          await addDb(data[i]);
+          addDb(data[i]);
         }
 
       });
