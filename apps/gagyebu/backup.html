@@ -18,13 +18,15 @@
     <div class="w3-card-4 w3-margin">
 
       <div class="w3-container w3-green">
-        <h2>백업할 구글시트</h2>
+        <h2>백업 & 불러오기</h2>
+        <p>백업은 새로운 구글시트에 자동으로 저장됩니다.</p>
+        <p>불러오기는 구글시트에 저장된것을 단말기에 저장합니다.</p>
       </div>
 
       <form class="w3-container">
 
-        <label>구글시트 아이디</label>
-        <input class="w3-input" id="sheet" type="text" required placeholder="구글시트 아이디를 입력해주세요.">
+        <label>불러올 구글시트 아이디</label>
+        <input class="w3-input" id="sheet" type="text" required placeholder="불러올 스프레드시트 아이디를 적어주세요.">
 
       </form>
 
@@ -141,7 +143,8 @@
     }
 
     function backupClick () {
-      var title = "가계부test"
+      let timeStemp = new Date(+new Date() + 3240 * 10000).toISOString().replace("T", " ").replace(/\..*/, '');
+      var title = "가계부백업_" + timeStemp;
       create(title, callback);
     }
 
@@ -165,42 +168,11 @@
       }
     }
 
-    /**
-     * Print the names and majors of students in a sample spreadsheet:
-     * https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
-     */
-    // async function listMajors (dbClear) {
-    //   let response;
-    //   try {
-    //     // Fetch first 10 files
-    //     response = await gapi.client.sheets.spreadsheets.values.get({
-    //       spreadsheetId: '1EaynJr7KL18xiabQXYldbYPVwoGOjykT_XEulpbhGc0',
-    //       range: 'DATA!A2:T',
-    //     });
-    //   } catch (err) {
-    //     document.getElementById('content').innerText = err.message;
-    //     return;
-    //   }
-    //   const range = response.result;
-    //   console.log(response.result);
-    //   if (!range || !range.values || range.values.length == 0) {
-    //     document.getElementById('content').innerText = 'No values found.';
-    //     return;
-    //   }
-    //   // Flatten to string to display
-    //   // const data = range.values;
-    //   // dbClear(data);
-    //   // console.log(data);
-
-    // }
-
     async function dbClear (response) {
       let store = db.transaction('calculate', 'readwrite').objectStore('calculate');
       let clearAllReq = store.clear();
       let data = response.result.values;
       clearAllReq.addEventListener('success', function (event) {
-
-
 
         for (var i = 0; i < data.length; i++) {
           addDb(data[i]);
@@ -244,7 +216,7 @@
       addReq.addEventListener('error', function (event) {
         // const error = event.target.error;
         // console.log('error', error.name);
-        // alert("저장에 실패하였습니다.");
+        alert("저장에 실패하였습니다.");
       });
     }
 
@@ -268,8 +240,8 @@
           resource: body,
         }).then((response) => {
           const result = response.result;
-          console.log(result);
-          console.log(`${result.updatedCells} cells updated.`);
+          // console.log(result);
+          // console.log(`${result.updatedCells} cells updated.`);
           alert(`${result.updatedCells} cells updated.`);
           // if (callback) callback(response);
         });
@@ -287,7 +259,7 @@
           },
         }).then((response) => {
           if (callback) callback(response);
-          console.log('Spreadsheet ID: ' + response.result.spreadsheetId);
+          // console.log('Spreadsheet ID: ' + response.result.spreadsheetId);
         });
       } catch (err) {
         document.getElementById('content').innerText = err.message;
@@ -306,12 +278,12 @@
       let store = db.transaction('calculate', 'readonly').objectStore('calculate');
       let getAllReq = store.getAll();
       getAllReq.addEventListener('success', function (event) {
-        console.log(event.target.result);
+        // console.log(event.target.result);
         let values = event.target.result;
         let data = values.map(r => [r.date, r.cash1, r.cash2, r.cash3, r.cash4, r.cash5, r.cash6, r.cash7,
         r.cash8, r.cash9, r.cash10, r.cash11, r.cash12, r.cash13, r.cash14, r.cash15, r.cash16, r.cash17, r.cash18, r.timestamp]);
 
-        console.log(data);
+        // console.log(data);
         data.unshift(["날짜", "현금", "외상", "통장", "신용", "합계", "기름", "수리비", "기타", "플비", "수수료", "경", "지출합계", "실제수입", "우리집카드", "우리집현금", "우리집합계", "기타수입", "우리집실제지출", "타임스템프"]);
         updateValues(data, spreadsheetId);
       });
@@ -319,14 +291,15 @@
     }
 
     function getValues (dbClear) {
+      var sheet = document.getElementById("sheet").value;
       try {
         gapi.client.sheets.spreadsheets.values.get({
-          spreadsheetId: '1EaynJr7KL18xiabQXYldbYPVwoGOjykT_XEulpbhGc0',
+          spreadsheetId: sheet,
           range: 'DATA!A2:T',
         }).then((response) => {
           const result = response.result;
           const numRows = result.values ? result.values.length : 0;
-          console.log(`${numRows} rows retrieved.`);
+          // console.log(`${numRows} rows retrieved.`);
           if (dbClear) dbClear(response);
         });
       } catch (err) {
