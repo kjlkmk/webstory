@@ -200,7 +200,11 @@
       let data = response.result.values;
       clearAllReq.addEventListener('success', function (event) {
 
-        addDb(data[0]);
+
+
+        for (var i = 0; i < data.length; i++) {
+          addDb(data[i]);
+        }
 
       });
     }
