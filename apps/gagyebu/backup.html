@@ -201,9 +201,7 @@
       let data = data;
       clearAllReq.addEventListener('success', function (event) {
 
-        for (var i = 0; i < data.length; i++) {
-          addDb(data[i]);
-        }
+        addDb(data[0]);
 
       });
     }
