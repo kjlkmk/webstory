@@ -146,8 +146,7 @@
     }
 
     function restoreClick () {
-      listMajors();
-      // dbClear();
+      getValues(dbClear);
     }
 
     /**
@@ -170,35 +169,35 @@
      * Print the names and majors of students in a sample spreadsheet:
      * https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
      */
-    async function listMajors () {
-      let response;
-      try {
-        // Fetch first 10 files
-        response = await gapi.client.sheets.spreadsheets.values.get({
-          spreadsheetId: '1EaynJr7KL18xiabQXYldbYPVwoGOjykT_XEulpbhGc0',
-          range: 'DATA!A2:T',
-        });
-      } catch (err) {
-        document.getElementById('content').innerText = err.message;
-        return;
-      }
-      const range = response.result;
-      console.log(response);
-      if (!range || !range.values || range.values.length == 0) {
-        document.getElementById('content').innerText = 'No values found.';
-        return;
-      }
-      // Flatten to string to display
-      const data = range.values;
-      dbClear(data);
-      console.log(data);
+    // async function listMajors (dbClear) {
+    //   let response;
+    //   try {
+    //     // Fetch first 10 files
+    //     response = await gapi.client.sheets.spreadsheets.values.get({
+    //       spreadsheetId: '1EaynJr7KL18xiabQXYldbYPVwoGOjykT_XEulpbhGc0',
+    //       range: 'DATA!A2:T',
+    //     });
+    //   } catch (err) {
+    //     document.getElementById('content').innerText = err.message;
+    //     return;
+    //   }
+    //   const range = response.result;
+    //   console.log(response.result);
+    //   if (!range || !range.values || range.values.length == 0) {
+    //     document.getElementById('content').innerText = 'No values found.';
+    //     return;
+    //   }
+    //   // Flatten to string to display
+    //   // const data = range.values;
+    //   // dbClear(data);
+    //   // console.log(data);
 
-    }
+    // }
 
-    async function dbClear (data) {
+    async function dbClear (response) {
       let store = db.transaction('calculate', 'readwrite').objectStore('calculate');
       let clearAllReq = store.clear();
-      let data = data;
+      let data = response.result.values;
       clearAllReq.addEventListener('success', function (event) {
 
         addDb(data[0]);
@@ -315,22 +314,22 @@
 
     }
 
-    // function getValues (spreadsheetId, range, callback) {
-    //   try {
-    //     gapi.client.sheets.spreadsheets.values.get({
-    //       spreadsheetId: spreadsheetId,
-    //       range: range,
-    //     }).then((response) => {
-    //       const result = response.result;
-    //       const numRows = result.values ? result.values.length : 0;
-    //       console.log(`${numRows} rows retrieved.`);
-    //       if (callback) callback(response);
-    //     });
-    //   } catch (err) {
-    //     document.getElementById('content').innerText = err.message;
-    //     return;
-    //   }
-    // }
+    function getValues (dbClear) {
+      try {
+        gapi.client.sheets.spreadsheets.values.get({
+          spreadsheetId: '1EaynJr7KL18xiabQXYldbYPVwoGOjykT_XEulpbhGc0',
+          range: 'DATA!A2:T',
+        }).then((response) => {
+          const result = response.result;
+          const numRows = result.values ? result.values.length : 0;
+          console.log(`${numRows} rows retrieved.`);
+          if (dbClear) dbClear(response);
+        });
+      } catch (err) {
+        document.getElementById('content').innerText = err.message;
+        return;
+      }
+    }
   </script>
   <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
   <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>
