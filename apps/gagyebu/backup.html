@@ -257,6 +257,18 @@
           properties: {
             title: title,
           },
+          sheets: [
+            {
+              properties: {
+                title: 'DATA',
+                gridProperties: {
+                  columnCount: 6,
+                  frozenRowCount: 1
+                }
+              }
+            },
+            // TODO: Add more sheets.
+          ]
         }).then((response) => {
           if (callback) callback(response);
           // console.log('Spreadsheet ID: ' + response.result.spreadsheetId);
