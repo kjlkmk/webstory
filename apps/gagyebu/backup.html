@@ -235,7 +235,7 @@
       try {
         gapi.client.sheets.spreadsheets.values.update({
           spreadsheetId: spreadsheetId,
-          range: "시트1!A1:Z",
+          range: "DATA!A1:Z",
           valueInputOption: "RAW",
           resource: body,
         }).then((response) => {
